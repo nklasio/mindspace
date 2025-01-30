@@ -10,23 +10,55 @@ import SwiftData
 
 @main
 struct MindScapeApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+    let container: ModelContainer
+    
+    init() {
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            let config = ModelConfiguration(
+                schema: Schema([Session.self, SensorReading.self]),
+                cloudKitDatabase: .private("iCloud.de.nstambor.MindScape")
+            )
+            
+            container = try ModelContainer(
+                for: Session.self,
+                SensorReading.self,
+                configurations: config
+            )
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            fatalError("Failed to initialize ModelContainer: \(error.localizedDescription)")
         }
-    }()
-
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(container)
+                .task {
+                    await cleanupUnassignedReadings()
+                }
         }
-        .modelContainer(sharedModelContainer)
+    }
+    
+    private func cleanupUnassignedReadings() async {
+        let context = container.mainContext
+        
+        let descriptor = FetchDescriptor<SensorReading>(
+            predicate: #Predicate<SensorReading> { reading in
+                reading.session == nil
+            }
+        )
+        
+        do {
+            let unassignedReadings = try context.fetch(descriptor)
+            for reading in unassignedReadings {
+                context.delete(reading)
+            }
+            try context.save()
+            if !unassignedReadings.isEmpty {
+                print("Cleaned up \(unassignedReadings.count) unassigned readings")
+            }
+        } catch {
+            print("Failed to cleanup unassigned readings: \(error.localizedDescription)")
+        }
     }
 }

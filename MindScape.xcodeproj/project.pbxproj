@@ -6,27 +6,57 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		85E747982D4A69C70083AA4B /* MindScape_Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 85E7478B2D4A69C60083AA4B /* MindScape_Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
-		85E7476A2D4A695C0083AA4B /* PBXContainerItemProxy */ = {
+		85E747962D4A69C70083AA4B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 85E7474D2D4A695B0083AA4B /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 85E747542D4A695B0083AA4B;
-			remoteInfo = MindScape;
-		};
-		85E747742D4A695C0083AA4B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 85E7474D2D4A695B0083AA4B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 85E747542D4A695B0083AA4B;
-			remoteInfo = MindScape;
+			remoteGlobalIDString = 85E7478A2D4A69C60083AA4B;
+			remoteInfo = "MindScape_Watch Watch App";
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		85E7479C2D4A69C70083AA4B /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				85E747982D4A69C70083AA4B /* MindScape_Watch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		85E747B12D4A71540083AA4B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		85E747B82D4A71B90083AA4B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		85E747552D4A695B0083AA4B /* MindScape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindScape.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		85E747692D4A695C0083AA4B /* MindScapeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindScapeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		85E747732D4A695C0083AA4B /* MindScapeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindScapeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		85E7478B2D4A69C60083AA4B /* MindScape_Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MindScape_Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +66,14 @@
 				Info.plist,
 			);
 			target = 85E747542D4A695B0083AA4B /* MindScape */;
+		};
+		85E747C62D4A73B90083AA4B /* Exceptions for "Shared" folder in "MindScape_Watch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SensorReading.swift,
+				Session.swift,
+			);
+			target = 85E7478A2D4A69C60083AA4B /* MindScape_Watch Watch App */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -48,14 +86,17 @@
 			path = MindScape;
 			sourceTree = "<group>";
 		};
-		85E7476C2D4A695C0083AA4B /* MindScapeTests */ = {
+		85E7478C2D4A69C60083AA4B /* MindScape_Watch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MindScapeTests;
+			path = "MindScape_Watch Watch App";
 			sourceTree = "<group>";
 		};
-		85E747762D4A695C0083AA4B /* MindScapeUITests */ = {
+		85E747C42D4A73870083AA4B /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MindScapeUITests;
+			exceptions = (
+				85E747C62D4A73B90083AA4B /* Exceptions for "Shared" folder in "MindScape_Watch Watch App" target */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -68,14 +109,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85E747662D4A695C0083AA4B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		85E747702D4A695C0083AA4B /* Frameworks */ = {
+		85E747882D4A69C60083AA4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -88,9 +122,9 @@
 		85E7474C2D4A695B0083AA4B = {
 			isa = PBXGroup;
 			children = (
+				85E747C42D4A73870083AA4B /* Shared */,
 				85E747572D4A695B0083AA4B /* MindScape */,
-				85E7476C2D4A695C0083AA4B /* MindScapeTests */,
-				85E747762D4A695C0083AA4B /* MindScapeUITests */,
+				85E7478C2D4A69C60083AA4B /* MindScape_Watch Watch App */,
 				85E747562D4A695B0083AA4B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,8 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				85E747552D4A695B0083AA4B /* MindScape.app */,
-				85E747692D4A695C0083AA4B /* MindScapeTests.xctest */,
-				85E747732D4A695C0083AA4B /* MindScapeUITests.xctest */,
+				85E7478B2D4A69C60083AA4B /* MindScape_Watch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,13 +148,17 @@
 				85E747512D4A695B0083AA4B /* Sources */,
 				85E747522D4A695B0083AA4B /* Frameworks */,
 				85E747532D4A695B0083AA4B /* Resources */,
+				85E7479C2D4A69C70083AA4B /* Embed Watch Content */,
+				85E747B82D4A71B90083AA4B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				85E747972D4A69C70083AA4B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				85E747572D4A695B0083AA4B /* MindScape */,
+				85E747C42D4A73870083AA4B /* Shared */,
 			);
 			name = MindScape;
 			packageProductDependencies = (
@@ -130,51 +167,28 @@
 			productReference = 85E747552D4A695B0083AA4B /* MindScape.app */;
 			productType = "com.apple.product-type.application";
 		};
-		85E747682D4A695C0083AA4B /* MindScapeTests */ = {
+		85E7478A2D4A69C60083AA4B /* MindScape_Watch Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 85E747812D4A695C0083AA4B /* Build configuration list for PBXNativeTarget "MindScapeTests" */;
+			buildConfigurationList = 85E747992D4A69C70083AA4B /* Build configuration list for PBXNativeTarget "MindScape_Watch Watch App" */;
 			buildPhases = (
-				85E747652D4A695C0083AA4B /* Sources */,
-				85E747662D4A695C0083AA4B /* Frameworks */,
-				85E747672D4A695C0083AA4B /* Resources */,
+				85E747872D4A69C60083AA4B /* Sources */,
+				85E747882D4A69C60083AA4B /* Frameworks */,
+				85E747892D4A69C60083AA4B /* Resources */,
+				85E747B12D4A71540083AA4B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				85E7476B2D4A695C0083AA4B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				85E7476C2D4A695C0083AA4B /* MindScapeTests */,
+				85E7478C2D4A69C60083AA4B /* MindScape_Watch Watch App */,
 			);
-			name = MindScapeTests;
+			name = "MindScape_Watch Watch App";
 			packageProductDependencies = (
 			);
-			productName = MindScapeTests;
-			productReference = 85E747692D4A695C0083AA4B /* MindScapeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		85E747722D4A695C0083AA4B /* MindScapeUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 85E747842D4A695C0083AA4B /* Build configuration list for PBXNativeTarget "MindScapeUITests" */;
-			buildPhases = (
-				85E7476F2D4A695C0083AA4B /* Sources */,
-				85E747702D4A695C0083AA4B /* Frameworks */,
-				85E747712D4A695C0083AA4B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				85E747752D4A695C0083AA4B /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				85E747762D4A695C0083AA4B /* MindScapeUITests */,
-			);
-			name = MindScapeUITests;
-			packageProductDependencies = (
-			);
-			productName = MindScapeUITests;
-			productReference = 85E747732D4A695C0083AA4B /* MindScapeUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
+			productName = "MindScape_Watch Watch App";
+			productReference = 85E7478B2D4A69C60083AA4B /* MindScape_Watch Watch App.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -189,13 +203,8 @@
 					85E747542D4A695B0083AA4B = {
 						CreatedOnToolsVersion = 16.2;
 					};
-					85E747682D4A695C0083AA4B = {
+					85E7478A2D4A69C60083AA4B = {
 						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 85E747542D4A695B0083AA4B;
-					};
-					85E747722D4A695C0083AA4B = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 85E747542D4A695B0083AA4B;
 					};
 				};
 			};
@@ -208,14 +217,15 @@
 			);
 			mainGroup = 85E7474C2D4A695B0083AA4B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 85E747562D4A695B0083AA4B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				85E747542D4A695B0083AA4B /* MindScape */,
-				85E747682D4A695C0083AA4B /* MindScapeTests */,
-				85E747722D4A695C0083AA4B /* MindScapeUITests */,
+				85E7478A2D4A69C60083AA4B /* MindScape_Watch Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -228,14 +238,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85E747672D4A695C0083AA4B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		85E747712D4A695C0083AA4B /* Resources */ = {
+		85E747892D4A69C60083AA4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -252,14 +255,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85E747652D4A695C0083AA4B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		85E7476F2D4A695C0083AA4B /* Sources */ = {
+		85E747872D4A69C60083AA4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -269,15 +265,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		85E7476B2D4A695C0083AA4B /* PBXTargetDependency */ = {
+		85E747972D4A69C70083AA4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 85E747542D4A695B0083AA4B /* MindScape */;
-			targetProxy = 85E7476A2D4A695C0083AA4B /* PBXContainerItemProxy */;
-		};
-		85E747752D4A695C0083AA4B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 85E747542D4A695B0083AA4B /* MindScape */;
-			targetProxy = 85E747742D4A695C0083AA4B /* PBXContainerItemProxy */;
+			target = 85E7478A2D4A69C60083AA4B /* MindScape_Watch Watch App */;
+			targetProxy = 85E747962D4A69C70083AA4B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -296,8 +287,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindScape/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to monitor your health metrics.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to track your heart rate.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "We need access to motion data to track device movement.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -314,7 +309,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -336,8 +332,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindScape/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to monitor your health metrics.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to track your heart rate.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "We need access to motion data to track device movement.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -354,7 +354,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -476,93 +477,76 @@
 			};
 			name = Release;
 		};
-		85E747822D4A695C0083AA4B /* Debug */ = {
+		85E7479A2D4A69C70083AA4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MindScape_Watch Watch App/MindScape_Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MindScape_Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = GR2XCKHLAR;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				INFOPLIST_FILE = "MindScape-Watch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = MindScape_Watch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to monitor your health metrics.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to track your heart rate.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "We need access to motion data to track device movement.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = de.nstambor.MindScape;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScapeTests;
+				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScape.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindScape.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MindScape";
-				XROS_DEPLOYMENT_TARGET = 2.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
 			};
 			name = Debug;
 		};
-		85E747832D4A695C0083AA4B /* Release */ = {
+		85E7479B2D4A69C70083AA4B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MindScape_Watch Watch App/MindScape_Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MindScape_Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = GR2XCKHLAR;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				INFOPLIST_FILE = "MindScape-Watch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = MindScape_Watch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to monitor your health metrics.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to track your heart rate.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "We need access to motion data to track device movement.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = de.nstambor.MindScape;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScapeTests;
+				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScape.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindScape.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MindScape";
-				XROS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Release;
-		};
-		85E747852D4A695C0083AA4B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GR2XCKHLAR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScapeUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = MindScape;
-				XROS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Debug;
-		};
-		85E747862D4A695C0083AA4B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GR2XCKHLAR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.nstambor.MindScapeUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = MindScape;
-				XROS_DEPLOYMENT_TARGET = 2.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
 			};
 			name = Release;
 		};
@@ -587,20 +571,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		85E747812D4A695C0083AA4B /* Build configuration list for PBXNativeTarget "MindScapeTests" */ = {
+		85E747992D4A69C70083AA4B /* Build configuration list for PBXNativeTarget "MindScape_Watch Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				85E747822D4A695C0083AA4B /* Debug */,
-				85E747832D4A695C0083AA4B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		85E747842D4A695C0083AA4B /* Build configuration list for PBXNativeTarget "MindScapeUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				85E747852D4A695C0083AA4B /* Debug */,
-				85E747862D4A695C0083AA4B /* Release */,
+				85E7479A2D4A69C70083AA4B /* Debug */,
+				85E7479B2D4A69C70083AA4B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
