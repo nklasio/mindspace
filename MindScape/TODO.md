@@ -1,5 +1,5 @@
 1. Missing Views:
-   [ ] Full Incident History view with filtering and search
+   [x] Full Incident History view with filtering and search
    [ ] Detailed Help & Support view
    [ ] Onboarding/Tutorial views for first-time users
    [ ] Watch app settings view needs the new styling
