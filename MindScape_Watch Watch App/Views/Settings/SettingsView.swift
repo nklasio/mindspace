@@ -26,6 +26,15 @@ struct SettingsView: View {
                         Text(samplingRate.description)
                             .foregroundStyle(qualityColor(for: samplingRate))
                     }
+                    
+                    HStack {
+                        Image(systemName: "timer")
+                            .foregroundStyle(qualityColor(for: samplingRate))
+                        Text("Data Interval: ")
+                            .foregroundStyle(.secondary)
+                        Text("\(Int(samplingRate.saveInterval))s")
+                            .foregroundStyle(qualityColor(for: samplingRate))
+                    }
                 } footer: {
                     VStack(alignment: .leading, spacing: 8) {
                         qualityExplanation(for: samplingRate)

@@ -70,8 +70,13 @@
 		85E747C62D4A73B90083AA4B /* Exceptions for "Shared" folder in "MindScape_Watch Watch App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Extensions/Notification+Extensions.swift",
+				Intents/StartSleepRecordingIntent.swift,
+				Intents/StopSleepRecordingIntent.swift,
+				Models/SamplingRate.swift,
 				SensorReading.swift,
 				Session.swift,
+				WatchConnectivityManager.swift,
 			);
 			target = 85E7478A2D4A69C60083AA4B /* MindScape_Watch Watch App */;
 		};
@@ -287,6 +292,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindScape/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = NSUserActivityTypes;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to monitor your health metrics.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to track your heart rate.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "We need access to motion data to track device movement.";
@@ -301,7 +307,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -332,6 +338,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindScape/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = NSUserActivityTypes;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to monitor your health metrics.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to track your heart rate.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "We need access to motion data to track device movement.";
@@ -346,7 +353,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -509,7 +516,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -546,7 +553,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
