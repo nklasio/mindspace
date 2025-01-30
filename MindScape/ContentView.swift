@@ -17,117 +17,75 @@ public enum TimeWindow {
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
+    @AppStorage("developerMode") private var developerMode = false
     @State private var showingExporter = false
     @State private var sessionToExport: Session?
+    @State private var selectedTab = 0
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(sessions) { session in
-                    NavigationLink {
-                        SessionDetailView(session: session)
-                    } label: {
-                        SessionRowView(session: session)
-                    }
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            session.isFavorite?.toggle()
-                            try? modelContext.save()
-                        } label: {
-                            if session.isFavorite == true {
-                                Label("Unfavorite", systemImage: "star.slash")
-                                    .tint(.gray)
-                            } else {
-                                Label("Favorite", systemImage: "star.fill")
-                                    .tint(.yellow)
-                            }
-                        }
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button {
-                            sessionToExport = session
-                            showingExporter = true
-                        } label: {
-                            Label("Export", systemImage: "square.and.arrow.up")
-                        }
-                        .tint(.blue)
-                        
-                        Button(role: .destructive) {
-                            modelContext.delete(session)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
+        TabView(selection: $selectedTab) {
+            // Dashboard Tab
+            DashboardView()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
                 }
+                .tag(0)
+            
+            // Settings Tab
+            NavigationStack {
+                SettingsView(showDevMode: true)
             }
-            .navigationTitle("Sleep Sessions")
-            .fileExporter(
-                isPresented: $showingExporter,
-                document: sessionToExport.map { CSVDocument(sessions: [$0]) } ?? CSVDocument(sessions: []),
-                contentType: UTType.commaSeparatedText,
-                defaultFilename: "sleep_session.csv"
-            ) { result in
-                if case .success(let url) = result {
-                    print("Saved to \(url)")
+            .tabItem {
+                Label("Settings", systemImage: "slider.horizontal.3")
+            }
+            .tag(1)
+            
+            // Sessions List Tab (only shown in developer mode)
+            if developerMode {
+                NavigationStack {
+                    SessionsListView()
                 }
-                sessionToExport = nil
+                .tabItem {
+                    Label("Sessions", systemImage: "terminal.fill")
+                }
+                .tag(2)
             }
+        }
+        .tint(.mint) // Primary accent color
+        .onAppear {
+            // Style the tab bar
+            let appearance = UITabBarAppearance()
+            appearance.configureWithTransparentBackground()
+            
+            // Make background more translucent
+            appearance.backgroundColor = .systemBackground.withAlphaComponent(0.5)
+            
+            // Use ultra thin material for maximum translucency
+            appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+            
+            // Add subtle shadow
+            appearance.shadowColor = .clear
+            
+            // Style the selected item
+            appearance.stackedLayoutAppearance.selected.iconColor = .systemMint
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+                .foregroundColor: UIColor.systemMint
+            ]
+            
+            // Style the normal items with more subtle colors
+            appearance.stackedLayoutAppearance.normal.iconColor = UIColor.secondaryLabel.withAlphaComponent(0.8)
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+                .foregroundColor: UIColor.secondaryLabel.withAlphaComponent(0.8)
+            ]
+            
+            // Apply the appearance
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
         }
     }
 }
 
-struct SessionRowView: View {
-    let session: Session
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                if session.isFavorite == true {
-                    Image(systemName: "star.fill")
-                        .foregroundStyle(.yellow)
-                }
-                Text(formattedTime)
-                    .font(.headline)
-                Spacer()
-                Text(duration)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-            
-            if let readings = session.readings {
-                HStack(spacing: 16) {
-                    Label("\(readings.count) samples", systemImage: "waveform.path")
-                        .font(.caption)
-                    
-                    if let avgHR = averageHeartRate {
-                        Label("\(Int(avgHR)) BPM avg", systemImage: "heart.fill")
-                            .font(.caption)
-                    }
-                }
-                .foregroundStyle(.secondary)
-            }
-        }
-        .padding(.vertical, 4)
-    }
-    
-    private var formattedTime: String {
-        session.startTime?.formatted(date: .abbreviated, time: .shortened) ?? "Unknown"
-    }
-    
-    private var duration: String {
-        guard let start = session.startTime, let end = session.endTime else { return "" }
-        let duration = end.timeIntervalSince(start)
-        let hours = Int(duration) / 3600
-        let minutes = Int(duration) / 60 % 60
-        return String(format: "%dh %dm", hours, minutes)
-    }
-    
-    private var averageHeartRate: Double? {
-        guard let readings = session.readings, !readings.isEmpty else { return nil }
-        let sum = readings.compactMap { $0.heartRate }.reduce(0, +)
-        return sum / Double(readings.count)
-    }
-}
+
 
 struct SessionDetailView: View {
     let session: Session
@@ -515,12 +473,12 @@ extension View {
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(previewContainer)
+    return ContentView()
+        .modelContainer(previewContainerContentView)
 }
 
 @MainActor
-private let previewContainer: ModelContainer = {
+private let previewContainerContentView: ModelContainer = {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(
