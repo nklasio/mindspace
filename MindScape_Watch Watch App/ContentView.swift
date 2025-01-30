@@ -23,6 +23,7 @@ struct ContentView: View {
     @State private var showSettings = false
     @AppStorage("samplingRate") private var samplingRate = SamplingRate.balanced
     @StateObject private var runtimeManager = ExtendedRuntimeManager.shared
+
     
     init(modelContext: ModelContext? = nil) {
         _sensorManager = StateObject(wrappedValue: SensorManager())
@@ -31,20 +32,102 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 15) {
+            VStack(spacing: 4) {
+                Spacer()
                 StatusHeader(
                     isRecording: isRecording,
                     samplingRate: samplingRate,
                     batteryInfo: batteryMonitor
                 )
+                Spacer()
                 
                 if !showDebugInfo {
-                    HeartRateDisplay(heartRate: sensorManager.heartRate)
+                    HStack(spacing: 12) {
+                        // Heart Rate Display
+                        HeartRateDisplay(heartRate: sensorManager.heartRate)
+                        
+                        // Blood Oxygen Display
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    .stroke(Color.blue.opacity(0.3), lineWidth: 8)
+                                    .frame(width: 60, height: 60)
+                                
+                                Circle()
+                                    .trim(from: 0, to: min(CGFloat(sensorManager.oxygenLevel) / 100, 1))
+                                    .stroke(Color.blue, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                                    .frame(width: 60, height: 60)
+                                    .rotationEffect(.degrees(-90))
+                                
+                                VStack(spacing: 0) {
+                                    Text("\(Int(sensorManager.oxygenLevel))")
+                                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                                        .monospacedDigit()
+                                    Text("%")
+                                        .font(.system(size: 12, weight: .medium))
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            
+                            Text("SpO₂")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                } else {
+                    // Debug Info Card
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Label("Sensor Data", systemImage: "waveform.path.ecg")
+                                .font(.headline)
+                                .foregroundStyle(.purple)
+                            
+                            Group {
+                                HStack {
+                                    Image(systemName: "heart.fill")
+                                        .foregroundStyle(.red)
+                                    Text("\(Int(sensorManager.heartRate)) BPM")
+                                        .monospacedDigit()
+                                    Spacer()
+                                }
+                                
+                                HStack {
+                                    Image(systemName: "lungs.fill")
+                                        .foregroundStyle(.blue)
+                                    Text("\(Int(sensorManager.oxygenLevel))% SpO₂")
+                                        .monospacedDigit()
+                                    Spacer()
+                                }
+                                
+                                Divider()
+                                
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Motion:")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                    
+                                    Text("Rot: \(String(format: "%.2f", sensorManager.rotationRate.x)), \(String(format: "%.2f", sensorManager.rotationRate.y)), \(String(format: "%.2f", sensorManager.rotationRate.z))")
+                                        .font(.caption)
+                                        .monospacedDigit()
+                                    
+                                    Text("Acc: \(String(format: "%.2f", sensorManager.userAcceleration.x)), \(String(format: "%.2f", sensorManager.userAcceleration.y)), \(String(format: "%.2f", sensorManager.userAcceleration.z))")
+                                        .font(.caption)
+                                        .monospacedDigit()
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(.ultraThinMaterial)
+                        )
+                    }
                 }
+                
                 
                 controlButtons
             }
-            .padding()
+            .padding(.horizontal)
             .sheet(isPresented: $showSettings) {
                 SettingsView(samplingRate: $samplingRate, showDebugInfo: $showDebugInfo)
             }
@@ -151,6 +234,36 @@ private let previewContainer: ModelContainer = {
             SensorReading.self,
             configurations: config
         )
+        
+        // Create sample data
+        let session1 = Session(
+            startTime: Date().addingTimeInterval(-3600),
+            endTime: Date(),
+            isFavorite: true
+        )
+        
+        // Add some sample readings with oxygen levels
+        let readings1 = [
+            SensorReading(
+                timestamp: Date().addingTimeInterval(-3600),
+                heartRate: 65,
+                oxygenLevel: 98
+            ),
+            SensorReading(
+                timestamp: Date().addingTimeInterval(-1800),
+                heartRate: 68,
+                oxygenLevel: 97
+            ),
+            SensorReading(
+                timestamp: Date(),
+                heartRate: 62,
+                oxygenLevel: 98
+            )
+        ]
+        
+        container.mainContext.insert(session1)
+        readings1.forEach { container.mainContext.insert($0) }
+        
         return container
     } catch {
         fatalError("Failed to create preview container: \(error.localizedDescription)")

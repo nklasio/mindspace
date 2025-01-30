@@ -5,6 +5,7 @@ import SwiftData
 class SensorReading {
     var timestamp: Date?
     var heartRate: Double?
+    var oxygenLevel: Double?
     var rotationX: Double?
     var rotationY: Double?
     var rotationZ: Double?
@@ -16,6 +17,7 @@ class SensorReading {
     
     init(timestamp: Date = Date(), 
          heartRate: Double = 0,
+         oxygenLevel: Double = 0,
          rotationX: Double = 0,
          rotationY: Double = 0,
          rotationZ: Double = 0,
@@ -25,6 +27,7 @@ class SensorReading {
          session: Session? = nil) {
         self.timestamp = timestamp
         self.heartRate = heartRate
+        self.oxygenLevel = oxygenLevel
         self.rotationX = rotationX
         self.rotationY = rotationY
         self.rotationZ = rotationZ

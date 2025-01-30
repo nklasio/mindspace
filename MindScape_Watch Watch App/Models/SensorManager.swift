@@ -7,6 +7,7 @@ class SensorManager: ObservableObject {
     @Published var heartRate: Double = 0
     @Published var rotationRate: CMRotationRate = .init()
     @Published var userAcceleration: CMAcceleration = .init()
+    @Published var oxygenLevel: Double = 0
     
     private let healthStore = HKHealthStore()
     private let motionManager = CMMotionManager()
@@ -20,7 +21,12 @@ class SensorManager: ObservableObject {
     init() {
         // Request authorization for health data
         let heartRateType = HKQuantityType(.heartRate)
-        healthStore.requestAuthorization(toShare: [], read: [heartRateType]) { success, error in
+        let oxygenType = HKQuantityType(.oxygenSaturation)
+        
+        healthStore.requestAuthorization(
+            toShare: [],
+            read: [heartRateType, oxygenType]
+        ) { success, error in
             if !success {
                 print("Failed to get authorization: \(String(describing: error))")
             }
@@ -70,6 +76,35 @@ class SensorManager: ObservableObject {
         }
     }
     
+    private func startOxygenQuery() {
+        let oxygenType = HKQuantityType(.oxygenSaturation)
+        
+        let query = HKAnchoredObjectQuery(
+            type: oxygenType,
+            predicate: nil,
+            anchor: nil,
+            limit: HKObjectQueryNoLimit
+        ) { [weak self] query, samples, deletedObjects, anchor, error in
+            self?.processOxygenSamples(samples)
+        }
+        
+        query.updateHandler = { [weak self] query, samples, deleted, anchor, error in
+            self?.processOxygenSamples(samples)
+        }
+        
+        healthStore.execute(query)
+    }
+    
+    private func processOxygenSamples(_ samples: [HKSample]?) {
+        guard let samples = samples as? [HKQuantitySample] else { return }
+        if let lastSample = samples.last {
+            DispatchQueue.main.async {
+                let percentage = lastSample.quantity.doubleValue(for: .percent())
+                self.oxygenLevel = percentage * 100
+            }
+        }
+    }
+    
     func startUpdates() {
         motionManager.startDeviceMotionUpdates(
             to: .main
@@ -81,6 +116,7 @@ class SensorManager: ObservableObject {
         
         setupTimer(interval: samplingRate.saveInterval)
         startHeartRateQuery()
+        startOxygenQuery()
     }
     
     func stopUpdates() {
@@ -104,6 +140,7 @@ class SensorManager: ObservableObject {
         let reading = SensorReading(
             timestamp: Date(),
             heartRate: heartRate,
+            oxygenLevel: oxygenLevel,
             rotationX: rotationRate.x,
             rotationY: rotationRate.y,
             rotationZ: rotationRate.z,

@@ -85,8 +85,6 @@ struct ContentView: View {
     }
 }
 
-
-
 struct SessionDetailView: View {
     let session: Session
     @State private var showingExporter = false
@@ -120,6 +118,98 @@ struct SessionDetailView: View {
                     .frame(height: 200)
             }
             
+            Section {
+                Chart {
+                    ForEach(sortedReadings.filter { $0.oxygenLevel != nil }, id: \.self) { reading in
+                        LineMark(
+                            x: .value("Time", reading.timestamp ?? Date()),
+                            y: .value("SpO₂", reading.oxygenLevel ?? 0)
+                        )
+                        .foregroundStyle(.blue)
+                        .interpolationMethod(.catmullRom)
+                        
+                        AreaMark(
+                            x: .value("Time", reading.timestamp ?? Date()),
+                            y: .value("SpO₂", reading.oxygenLevel ?? 0)
+                        )
+                        .foregroundStyle(.blue.opacity(0.1))
+                        .interpolationMethod(.catmullRom)
+                        
+                        if let selectedReading = selectedReading,
+                           selectedReading.id == reading.id {
+                            PointMark(
+                                x: .value("Time", reading.timestamp ?? Date()),
+                                y: .value("SpO₂", reading.oxygenLevel ?? 0)
+                            )
+                            .foregroundStyle(.blue)
+                        }
+                    }
+                }
+                .chartYScale(domain: 90...100)
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
+                .chartXAxis {
+                    AxisMarks(values: .stride(by: .minute, count: 15)) { value in
+                        if let date = value.as(Date.self) {
+                            AxisValueLabel {
+                                Text(date.formatted(date: .omitted, time: .shortened))
+                            }
+                        }
+                    }
+                }
+                .frame(height: 200)
+                .chartOverlay { proxy in
+                    GeometryReader { geometry in
+                        Rectangle()
+                            .fill(.clear)
+                            .contentShape(Rectangle())
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { value in
+                                        let x = value.location.x - geometry[proxy.plotAreaFrame].origin.x
+                                        guard x >= 0, x <= geometry[proxy.plotAreaFrame].width else {
+                                            return
+                                        }
+                                        
+                                        let timestamp = proxy.value(atX: x, as: Date.self)
+                                        if let timestamp {
+                                            selectedReading = findClosestReading(to: timestamp)
+                                        }
+                                    }
+                                    .onEnded { _ in
+                                        selectedReading = nil
+                                    }
+                            )
+                        
+                        if let selectedReading = selectedReading {
+                            let x = proxy.position(forX: selectedReading.timestamp ?? Date()) ?? 0
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(selectedReading.timestamp?.formatted(date: .abbreviated, time: .shortened) ?? "")
+                                    .font(.caption2)
+                                Text("\(Int(selectedReading.oxygenLevel ?? 0))% SpO₂")
+                                    .foregroundStyle(.blue)
+                                    .font(.caption.bold())
+                            }
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color(UIColor.systemBackground))
+                                    .shadow(radius: 2)
+                            )
+                            .position(
+                                x: min(max(x, 100), geometry.size.width - 100),
+                                y: 40
+                            )
+                        }
+                    }
+                }
+            } header: {
+                Label("Blood Oxygen", systemImage: "lungs.fill")
+                    .foregroundStyle(.blue)
+            }
+            
             Section("Motion") {
                 MotionChart(readings: session.readings ?? [])
                     .frame(height: 250)
@@ -146,6 +236,19 @@ struct SessionDetailView: View {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private var sortedReadings: [SensorReading] {
+        session.readings?.sorted { ($0.timestamp ?? Date()) < ($1.timestamp ?? Date()) } ?? []
+    }
+    
+    @State private var selectedReading: SensorReading?
+    
+    private func findClosestReading(to date: Date) -> SensorReading? {
+        return sortedReadings.min(by: { 
+            abs($0.timestamp?.timeIntervalSince(date) ?? .infinity) < 
+            abs($1.timestamp?.timeIntervalSince(date) ?? .infinity) 
+        })
     }
     
     private var averageHeartRate: Double? {
@@ -429,13 +532,13 @@ struct CSVDocument: FileDocument {
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let headers = "Session,Timestamp,Heart Rate,Rotation X,Rotation Y,Rotation Z,Acceleration X,Acceleration Y,Acceleration Z\n"
+        let headers = "Session,Timestamp,Heart Rate,Oxygen Level,Rotation X,Rotation Y,Rotation Z,Acceleration X,Acceleration Y,Acceleration Z\n"
         var rows: [String] = []
         
         for session in sessions {
             guard let readings = session.readings else { continue }
             for reading in readings {
-                let row = "\(session.name ?? ""),\(reading.timestamp?.ISO8601Format() ?? ""),\(reading.heartRate ?? 0),\(reading.rotationX ?? 0),\(reading.rotationY ?? 0),\(reading.rotationZ ?? 0),\(reading.accelerationX ?? 0),\(reading.accelerationY ?? 0),\(reading.accelerationZ ?? 0)"
+                let row = "\(session.name ?? ""),\(reading.timestamp?.ISO8601Format() ?? ""),\(reading.heartRate ?? 0),\(reading.oxygenLevel ?? 0),\(reading.rotationX ?? 0),\(reading.rotationY ?? 0),\(reading.rotationZ ?? 0),\(reading.accelerationX ?? 0),\(reading.accelerationY ?? 0),\(reading.accelerationZ ?? 0)"
                 rows.append(row)
             }
         }
